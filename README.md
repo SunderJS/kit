@@ -17,9 +17,9 @@ Some included modules are [**Sunder framework**](https://github.com/sunder/sunde
 * 🐛 **Error logging** through Sentry. 〽️
 
 ### 👨‍💻 Session management
-* 🍪 A cookie-based authentication system for keeping users logged in securely. Backed by [Workers KV](https://developers.cloudflare.com/workers/runtime-apis/kv) (or any other database) there is no need to mess with JWT tokens anymore as you can store arbitrary data with a session.
+* 🍪 A cookie-based authentication system for keeping users logged in securely. By being backed by [Workers KV](https://developers.cloudflare.com/workers/runtime-apis/kv) (or any other database) you can associate arbitrary data with a session, so there is little excuse for using JWT instead.
 
-### 🚀 Common utilities
+### 🕵️‍♀️ Crypto & Encoding/Decoding
 * 🔏 Random token generation (cryptographically sound), use this to generate post IDs, user IDs or even secrets such as API tokens.
 * 📦 Base64 encoding and decoding (RFC 3548 compliant)
 * 🏷 [Base-X](https://www.npmjs.com/package/base-x) encoding and decoding, which can be used for encoding data or random IDs with a given alphabet. Example alphabets:
