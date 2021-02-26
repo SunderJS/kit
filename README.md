@@ -1,5 +1,8 @@
 # kit
 
+[![CI](https://github.com/SunderJS/kit/workflows/CI/badge.svg)](https://github.com/SunderJS/kit/actions)
+[![NPM badge](https://img.shields.io/npm/v/sunder-kit)](https://www.npmjs.com/package/sunder-kit)
+
 Kit is a library of building blocks and utilities for Cloudflare Workers (CFW).
 
 Functionality can be individually imported, so you can pick the parts you need without increasing your bundle size too much.
