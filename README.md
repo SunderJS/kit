@@ -13,7 +13,7 @@ Some included modules are [**Sunder framework**](https://github.com/sunder/sunde
 
 ### 🔌 Plug-and-play middlewares
 
-* 🗂 **Static file serving (Cloudflare Sites)** for serving static files through KV Asset Handler (generally this would be the assets added through [Cloudflare Sites](https://developers.cloudflare.com/workers/platform/sites)) 〽️
+* 🗂 **Static file serving** ([Cloudflare Sites](https://developers.cloudflare.com/workers/platform/sites)) 〽️
 * 🐛 **Error logging** through Sentry. 〽️
 
 ### 👨‍💻 Session management
