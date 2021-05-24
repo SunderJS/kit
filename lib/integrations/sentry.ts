@@ -65,7 +65,7 @@ export class Sentry extends BorderlessSentry {
       {
         hideHeaders: ["cookies", "authorization"],
         ignore: (err: any, _ctx: any) => {
-          if (isHttpError(err) && err.status.toString[0] !== "5") {
+          if (isHttpError(err) && err.status.toString()[0] !== "5") {
             return true;
           }
           return false;

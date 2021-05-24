@@ -1,6 +1,6 @@
 {
   "name": "@sunder/kit",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Sunder/Cloudflare Worker building blocks for APIs and websites",
   "main": "dist/index.js",
   "repository": {
