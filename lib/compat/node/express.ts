@@ -33,7 +33,7 @@ export function wrapAppInExpress(app: Sunder, opts: ExpressWrapOptions = {}): Ex
 
   if (opts.static) {
     exApp.use(
-      opts.static.filepath,
+      opts.static.route,
       express.static(opts.static.filepath, {
         extensions: ["html"],
         redirect: true,
