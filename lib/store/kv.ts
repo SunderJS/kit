@@ -37,14 +37,17 @@ export class KVStore<SessionType> implements SessionStore<SessionType> {
     this.kv = kv;
   }
 
-  async createSession(data: SessionType & SessionExpirationData): Promise<any> {
-    const hashString = await tokenToHashStringBase62(generateSessionToken());
+  async createSession(data: SessionType & SessionExpirationData): Promise<string> {
+    const token = generateSessionToken();
+    const hashString = await tokenToHashStringBase62(token);
 
     // Note: The expiration is set longer than max age as a courtesy, the cookie itself is configured to expire in the
     // browser, but still if we ever get a very old cookie we can tell the user it expired instead of saying it's invalid.
     await this.kv.put(SESSION_KEY_PREFIX + hashString, JSON.stringify(data), {
       expirationTtl: data.session_max_age * 4,
     });
+
+    return token;
   }
 
   async getSession(sessionToken: string): Result<SessionType & SessionExpirationData, "expired" | "invalid"> {
