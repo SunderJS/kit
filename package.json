@@ -1,6 +1,6 @@
 {
-  "name": "sunder-kit",
-  "version": "0.1.0",
+  "name": "@sunder/kit",
+  "version": "0.1.2",
   "description": "Sunder/Cloudflare Worker building blocks for APIs and websites",
   "main": "dist/index.js",
   "repository": {
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "rimraf build && tsc",
+    "format": "prettier -w lib test",
     "prepublishOnly": "echo \"Error: Don't run 'npm publish' in root. Use 'npm run dist' instead.\" && exit 1",
     "dist": "npm i && npm t && npm run build && cp package.json build/lib/ && cp README.md build/lib/ && cd build/lib && npm publish --ignore-scripts",
     "test": "jest"
@@ -31,7 +32,7 @@
     "formdata-node": "^2.4.0",
     "fs-extra": "^9.1.0",
     "node-fetch": "^2.6.1",
-    "sunder": "^0.7.1"
+    "sunder": "^0.7.2"
   },
   "devDependencies": {
     "@types/cookie": "^0.4.0",
@@ -42,6 +43,7 @@
     "@udacity/types-service-worker-mock": "^1.2.0",
     "http-errors": "^1.8.0",
     "jest": "^26.6.3",
+    "prettier": "^2.3.0",
     "ts-jest": "^26.5.2",
     "types-cloudflare-worker": "^1.2.0",
     "typescript": "^4.2.2"

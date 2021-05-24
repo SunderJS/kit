@@ -1,7 +1,7 @@
 # kit
 
 [![CI](https://github.com/SunderJS/kit/workflows/CI/badge.svg)](https://github.com/SunderJS/kit/actions)
-[![NPM badge](https://img.shields.io/npm/v/sunder-kit)](https://www.npmjs.com/package/sunder-kit)
+[![NPM badge](https://img.shields.io/npm/v/@sunder/kit)](https://www.npmjs.com/package/@sunder/kit)
 
 Kit is a library of building blocks and utilities for Cloudflare Workers (CFW).
 
@@ -44,11 +44,11 @@ Kit contains the building blocks to achieve Node compatibility fairly easily. Th
 
 ## Installation
 ```
-npm i sunder-kit
+npm i @sunder/kit
 ```
 
 ## Documentation
-👷‍♀️  Guides and long-form docs are to-do, use the Typescript typings and comments for now..
+👷‍♀️  Guides and long-form docs are to-do, use the Typescript typings as your guide for now.
 
 The docs will live on [sunderjs.com](https://sunderjs.com).
 

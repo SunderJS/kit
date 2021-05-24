@@ -7,61 +7,61 @@ const EQ_CHAR = "=".charCodeAt(0);
 // Use a lookup table to find the index.
 const lookup = new Uint8Array(256);
 for (let i = 0; i < CHARS.length; i++) {
-    lookup[CHARS.charCodeAt(i)] = i;
+  lookup[CHARS.charCodeAt(i)] = i;
 }
 
 /**
  * RFC3548 Base64 encoder.
- * 
+ *
  * This uses the standard `+` and `/` for padding which makes it not URL safe out of the box!
  */
 export const base64 = {
-    encode(bytes: Uint8Array): string {
-        const len = bytes.length;
-        let base64 = "";
+  encode(bytes: Uint8Array): string {
+    const len = bytes.length;
+    let base64 = "";
 
-        for (let i = 0; i < len; i += 3) {
-            const b0 = bytes[i + 0];
-            const b1 = bytes[i + 1];
-            const b2 = bytes[i + 2];
-            base64 += CHARS.charAt(b0 >>> 2);
-            base64 += CHARS.charAt(((b0 &  3) << 4) | (b1 >>> 4));
-            base64 += CHARS.charAt(((b1 & 15) << 2) | (b2 >>> 6));
-            base64 += CHARS.charAt(b2 & 63);
-        }
-
-        if (len % 3 === 2) {
-            base64 = base64.substring(0, base64.length - 1) + "=";
-        } else if (len % 3 === 1) {
-            base64 = base64.substring(0, base64.length - 2) + "==";
-        }
-
-        return base64;
-    },
-
-    decode(base64: string): Uint8Array {
-        const len = base64.length;
-        let bufferLength = len * 3 >>> 2; // * 0.75
-
-        if (base64.charCodeAt(len - 1) === EQ_CHAR) bufferLength--;
-        if (base64.charCodeAt(len - 2) === EQ_CHAR) bufferLength--;
-
-        const bytes = new Uint8Array(bufferLength);
-        for (let i = 0, p = 0; i < len; i += 4) {
-            const encoded1 = lookup[base64.charCodeAt(i + 0)];
-            const encoded2 = lookup[base64.charCodeAt(i + 1)];
-            const encoded3 = lookup[base64.charCodeAt(i + 2)];
-            const encoded4 = lookup[base64.charCodeAt(i + 3)];
-
-            if (encoded1 === undefined || encoded2 === undefined || encoded3 === undefined || encoded4 === undefined) {
-                throw new Error("Non-base64 character");
-            }
-
-            bytes[p++] = ( encoded1       << 2) | (encoded2 >> 4);
-            bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
-            bytes[p++] = ((encoded3 & 3)  << 6) | (encoded4 & 63);
-        }
-
-        return bytes;
+    for (let i = 0; i < len; i += 3) {
+      const b0 = bytes[i + 0];
+      const b1 = bytes[i + 1];
+      const b2 = bytes[i + 2];
+      base64 += CHARS.charAt(b0 >>> 2);
+      base64 += CHARS.charAt(((b0 & 3) << 4) | (b1 >>> 4));
+      base64 += CHARS.charAt(((b1 & 15) << 2) | (b2 >>> 6));
+      base64 += CHARS.charAt(b2 & 63);
     }
-}
+
+    if (len % 3 === 2) {
+      base64 = base64.substring(0, base64.length - 1) + "=";
+    } else if (len % 3 === 1) {
+      base64 = base64.substring(0, base64.length - 2) + "==";
+    }
+
+    return base64;
+  },
+
+  decode(base64: string): Uint8Array {
+    const len = base64.length;
+    let bufferLength = (len * 3) >>> 2; // * 0.75
+
+    if (base64.charCodeAt(len - 1) === EQ_CHAR) bufferLength--;
+    if (base64.charCodeAt(len - 2) === EQ_CHAR) bufferLength--;
+
+    const bytes = new Uint8Array(bufferLength);
+    for (let i = 0, p = 0; i < len; i += 4) {
+      const encoded1 = lookup[base64.charCodeAt(i + 0)];
+      const encoded2 = lookup[base64.charCodeAt(i + 1)];
+      const encoded3 = lookup[base64.charCodeAt(i + 2)];
+      const encoded4 = lookup[base64.charCodeAt(i + 3)];
+
+      if (encoded1 === undefined || encoded2 === undefined || encoded3 === undefined || encoded4 === undefined) {
+        throw new Error("Non-base64 character");
+      }
+
+      bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
+      bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
+      bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+    }
+
+    return bytes;
+  },
+};
