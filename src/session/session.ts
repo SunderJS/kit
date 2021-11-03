@@ -64,7 +64,7 @@ export class SessionManager<SessionDataType> {
 
   /**
    * Create a new session, it gets inserted into the store for later retrieval.
-   * Note that the `expires_at` and `max_age`
+   * Note that the `expires_at` and `max_age` must be handled by the store.
    *
    * Returns the header value for Set-Cookie.
    *
@@ -93,12 +93,11 @@ export class SessionManager<SessionDataType> {
     if (!sessionCookieValue) {
       return { success: false, value: "cookie_not_found", status: HttpStatus.Unauthorized };
     }
-
     const r = await this.store.getSession(sessionCookieValue);
     if (r.success) {
       return r;
     } else {
-      return { success: false, value: r.value, status: HttpStatus.Unauthorized };
+      return { success: false, value: r.value as "expired" | "invalid", status: HttpStatus.Unauthorized };
     }
   }
 

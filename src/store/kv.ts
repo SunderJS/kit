@@ -1,4 +1,3 @@
-import { CloudflareWorkerKV } from "types-cloudflare-worker";
 import { base62 } from "../encoding/baseX";
 import { HttpStatus } from "sunder";
 import { sha256 } from "../crypto/hash";
@@ -31,9 +30,9 @@ function generateSessionToken() {
  * they still could not guess a token and use it to impersonate a user.
  */
 export class KVStore<SessionType> implements SessionStore<SessionType> {
-  kv: CloudflareWorkerKV;
+  kv: KVNamespace;
 
-  constructor(kv: CloudflareWorkerKV) {
+  constructor(kv: KVNamespace) {
     this.kv = kv;
   }
 
@@ -59,7 +58,10 @@ export class KVStore<SessionType> implements SessionStore<SessionType> {
       return { success: false, status: HttpStatus.Unauthorized, value: "invalid" };
     }
 
-    const entry: SessionType & SessionExpirationData = await this.kv.get(SESSION_KEY_PREFIX + hashString, "json");
+    const entry: (SessionType & SessionExpirationData) | null = await this.kv.get(
+      SESSION_KEY_PREFIX + hashString,
+      "json"
+    );
     if (entry === null) {
       return { success: false, status: HttpStatus.Unauthorized, value: "invalid" };
     }
