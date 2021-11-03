@@ -3,24 +3,24 @@ import { headersToObject } from "../common/util";
 import { Context } from "sunder";
 import { isHttpError } from "sunder/util/error";
 
-export interface SentryMiddlewareOptions<ParamsType, StateType> {
+export interface SentryMiddlewareOptions<EnvironmentType, ParamsType, StateType> {
   /**
    * Headers to remove from logging, defaults to `"cookie"` and `"authorization"`.
    */
   hideHeaders: string[];
 
   /** A function that calculates the user ID from the context. */
-  getUserId?: (ctx: Context<ParamsType, StateType>) => string;
+  getUserId?: (ctx: Context<EnvironmentType, ParamsType, StateType>) => string;
 
   /**
    * An optional function that can be used to add extra tags to the error
    */
-  getExtraTags?: (ctx: Context<ParamsType, StateType>) => Record<string, string>;
+  getExtraTags?: (ctx: Context<EnvironmentType, ParamsType, StateType>) => Record<string, string>;
 
   /**
    * Function that can be run on errors to optionally ignore them
    */
-  ignore: (error: Error | any, ctx: Context<ParamsType, StateType>) => boolean;
+  ignore: (error: Error | any, ctx: Context<EnvironmentType, ParamsType, StateType>) => boolean;
 }
 
 /**
@@ -58,10 +58,10 @@ export class Sentry extends BorderlessSentry {
    *
    * By default it ignores HTTP errors that are non-500, this can be overriden by providing your own `ignore` function.
    */
-  getMiddleware<ParamsType = {}, StateType = any>(
-    options: Partial<SentryMiddlewareOptions<ParamsType, StateType>> = {}
+  getMiddleware<EnvironmentType = any, ParamsType = {}, StateType = any>(
+    options: Partial<SentryMiddlewareOptions<EnvironmentType, ParamsType, StateType>> = {}
   ) {
-    const optionsDefinite: SentryMiddlewareOptions<ParamsType, StateType> = Object.assign(
+    const optionsDefinite: SentryMiddlewareOptions<EnvironmentType, ParamsType, StateType> = Object.assign(
       {
         hideHeaders: ["cookies", "authorization"],
         ignore: (err: any, _ctx: any) => {
@@ -74,10 +74,10 @@ export class Sentry extends BorderlessSentry {
       options
     );
 
-    return async (ctx: Context<ParamsType, StateType>, next: Function) => {
+    return async (ctx: Context<EnvironmentType, ParamsType, StateType>, next: Function) => {
       try {
         await next();
-      } catch (e) {
+      } catch (e: any) {
         if (options.ignore && options.ignore(e, ctx)) {
           throw e; //re-throw without logging
         }

@@ -1,6 +1,6 @@
 {
   "name": "@sunder/kit",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Sunder/Cloudflare Worker building blocks for APIs and websites",
   "main": "dist/index.js",
   "repository": {
@@ -31,7 +31,7 @@
     "formdata-node": "^2.4.0",
     "fs-extra": "^9.1.0",
     "node-fetch": "^2.6.1",
-    "sunder": "^0.7.2"
+    "sunder": "^0.9.2"
   },
   "devDependencies": {
     "@types/cookie": "^0.4.0",

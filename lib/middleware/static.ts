@@ -17,7 +17,7 @@ import { Context, MiddlewareNextFunction } from "sunder";
  *
  */
 export function serveStaticAssetsFromKV(options: Partial<Options> = {}) {
-  return async function (ctx: Context<{ kvAssetPath: string }>, next: MiddlewareNextFunction) {
+  return async function (ctx: Context<{}, { kvAssetPath: string }>, next: MiddlewareNextFunction) {
     try {
       const resp = await getAssetFromKV((ctx as any).event, {
         mapRequestToAsset: (req: Request) => new Request(ctx.url.origin + "/" + ctx.params.kvAssetPath, req),
